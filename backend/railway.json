@@ -1,0 +1,1 @@
+{\n  \"$schema\": \"https://railway.app/railway.schema.json\",\n  \"build\": {\n    \"builder\": \"nixpacks\"\n  },\n  \"deploy\": {\n    \"startCommand\": \"npm run build && npm start\",\n    \"numReplicas\": 1\n  }\n}\n
