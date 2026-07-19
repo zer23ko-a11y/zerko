@@ -1,0 +1,41 @@
+{
+  "name": "ker-lab-backend",
+  "version": "1.0.0",
+  "description": "KER-Lab Police Stop Tracker Backend API",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "ts-node src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts"
+  },
+  "keywords": ["police", "tracking", "map", "api"],
+  "author": "zer23ko-a11y",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "express-cors": "^1.0.1",
+    "mongoose": "^7.5.0",
+    "dotenv": "^16.3.1",
+    "jsonwebtoken": "^9.1.0",
+    "bcryptjs": "^2.4.3",
+    "firebase-admin": "^12.0.0",
+    "moment-timezone": "^0.5.45",
+    "axios": "^1.5.0",
+    "joi": "^17.11.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.20",
+    "@types/node": "^20.8.0",
+    "@types/jsonwebtoken": "^9.0.4",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jest": "^29.5.5",
+    "typescript": "^5.2.2",
+    "ts-node": "^10.9.1",
+    "eslint": "^8.50.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1"
+  }
+}
