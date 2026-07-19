@@ -4,17 +4,23 @@ import { Pin } from '../types';
 interface PinsStore {
   pins: Pin[];
   selectedPin: Pin | null;
+  blockedUsers: string[]; // user IDs that are blocked
   addPin: (pin: Pin) => void;
   removePin: (id: string) => void;
   updatePin: (id: string, pin: Partial<Pin>) => void;
   selectPin: (pin: Pin | null) => void;
   getPinById: (id: string) => Pin | undefined;
   getPinsByRegion: (lat: number, lon: number, radius: number) => Pin[];
+  blockUser: (userId: string) => void;
+  unblockUser: (userId: string) => void;
+  isUserBlocked: (userId: string) => boolean;
+  getBlockedUsers: () => string[];
 }
 
 export const usePinsStore = create<PinsStore>((set, get) => ({
   pins: [],
   selectedPin: null,
+  blockedUsers: [],
 
   addPin: (pin: Pin) => {
     set((state) => ({
@@ -55,6 +61,26 @@ export const usePinsStore = create<PinsStore>((set, get) => ({
       );
       return distance <= radius;
     });
+  },
+
+  blockUser: (userId: string) => {
+    set((state) => ({
+      blockedUsers: [...new Set([...state.blockedUsers, userId])],
+    }));
+  },
+
+  unblockUser: (userId: string) => {
+    set((state) => ({
+      blockedUsers: state.blockedUsers.filter((id) => id !== userId),
+    }));
+  },
+
+  isUserBlocked: (userId: string) => {
+    return get().blockedUsers.includes(userId);
+  },
+
+  getBlockedUsers: () => {
+    return get().blockedUsers;
   },
 }));
 

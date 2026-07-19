@@ -82,6 +82,81 @@ export const pinsApi = {
       return false;
     }
   },
+
+  // Check if pin exists at location
+  checkPinExists: async (
+    latitude: number,
+    longitude: number,
+    radiusMeters: number = 100
+  ): Promise<Pin | null> => {
+    try {
+      const response = await apiClient.get<ApiResponse<Pin | null>>(
+        '/api/pins/check-exists',
+        {
+          params: { latitude, longitude, radiusMeters },
+        }
+      );
+      return response.data.data || null;
+    } catch (error) {
+      console.error('Error checking pin existence:', error);
+      return null;
+    }
+  },
+
+  // Block user
+  blockUser: async (userId: string): Promise<boolean> => {
+    try {
+      const response = await apiClient.post<ApiResponse<boolean>>(
+        `/api/admin/users/${userId}/block`
+      );
+      return response.data.success || false;
+    } catch (error) {
+      console.error('Error blocking user:', error);
+      return false;
+    }
+  },
+
+  // Unblock user
+  unblockUser: async (userId: string): Promise<boolean> => {
+    try {
+      const response = await apiClient.post<ApiResponse<boolean>>(
+        `/api/admin/users/${userId}/unblock`
+      );
+      return response.data.success || false;
+    } catch (error) {
+      console.error('Error unblocking user:', error);
+      return false;
+    }
+  },
+
+  // Get all users (admin only)
+  getAllUsers: async (): Promise<any[]> => {
+    try {
+      const response = await apiClient.get<ApiResponse<any[]>>(
+        '/api/admin/users'
+      );
+      return response.data.data || [];
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      return [];
+    }
+  },
+
+  // Delete pin (admin)
+  deletePinAsAdmin: async (pinId: string, reason: string): Promise<boolean> => {
+    try {
+      const response = await apiClient.delete<ApiResponse<boolean>>(
+        `/api/admin/pins/${pinId}`,
+        {
+          data: { reason },
+        }
+      );
+      return response.data.success || false;
+    } catch (error) {
+      console.error('Error deleting pin as admin:', error);
+      return false;
+    }
+  },
 };
 
 export default apiClient;
